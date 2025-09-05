@@ -20,6 +20,7 @@ function Get-MtGraphPermissions {
 
         if ($context.AuthType -eq 'Delegated') {
             $__MtSession.Permissions.AccountName = $context.Account
+            $__MtSession.Permissions.AccountId = (Invoke-MtGraphRequest -RelativeUri "me").Id
         } elseif ($context.AuthType -eq 'AppOnly' -or $context.AuthType -eq 'ManagedIdentity' ) {
             $__MtSession.Permissions.AccountName = $context.AppName
             $__MtSession.Permissions.AccountId = (Invoke-MtGraphRequest -RelativeUri servicePrincipals -Filter "appId eq '$($context.ClientId)'").id
