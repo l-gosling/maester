@@ -1,4 +1,19 @@
 ﻿
+<#
+.SYNOPSIS
+    Gets Exchange Online role assignments for the current user or service principal.
+
+.DESCRIPTION
+    This function retrieves Exchange Online role assignments for the currently authenticated user or service principal.
+    The function gets all assigned roles, including those directly assigned or inherited from Entra ID roles.
+
+.EXAMPLE
+    Get-MtExchangeRoles
+    # Gets Exchange role assignments for the current authenticated context
+
+.LINK
+    https://maester.dev/docs/commands/Get-MtExchangeRoles
+#>
 function Get-MtExchangeRoles {
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
