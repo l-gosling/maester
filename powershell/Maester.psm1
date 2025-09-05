@@ -18,6 +18,7 @@ $__MtSession = @{
 	GraphBaseUri = $null
 	TestResultDetail = @{}
 	Connections = @()
+	Permissions = @{}
 	DnsCache = @()
 	ExoCache = @{}
 	OrcaCache = @{}
