@@ -15,6 +15,9 @@ function Get-MtGraphPermissions {
         $__MtSession.Permissions.ApplicationId = $context.ClientId
         Write-Verbose "ApplicationId is '$($__MtSession.Permissions.ApplicationId)'"
 
+        $__MtSession.Permissions.Scopes = $context.Scopes
+        Write-Verbose "Scope count is '$(($__MtSession.Permissions.Scopes).Count)'"
+
         if ($context.AuthType -eq 'Delegated') {
             $__MtSession.Permissions.AccountName = $context.Account
         } elseif ($context.AuthType -eq 'AppOnly' -or $context.AuthType -eq 'ManagedIdentity' ) {
