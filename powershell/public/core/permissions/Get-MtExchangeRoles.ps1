@@ -29,21 +29,26 @@ function Get-MtExchangeRoles {
         if ($__MtSession.Permissions.AuthType -eq 'Delegated') {
             $currentUser = Get-User -Identity $__MtSession.Permissions.AccountName
             if ($currentUser) {
-                # Get role assignments for the current signed-in user
-                $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $currentUser.DistinguishedName).Role
+                try {
+                    $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $currentUser.DistinguishedName).Role | Select-Object -Unique
+                } catch {
+                    Write-Verbose "No role assignments found for user or insufficient permissions: $($_.Exception.Message)"
+                    $__MtSession.Permissions.ExchangeRole = @()
+                    return
+                }
                 Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRole).Count)'"
             } else {
                 Write-Verbose "Current user with id '$($__MtSession.Permissions.AccountId)' not found"
             }
         } elseif ($__MtSession.Permissions.AuthType -eq 'AppOnly' -or $__MtSession.Permissions.AuthType -eq 'ManagedIdentity' ) {
-            $servicePrincipal = Get-ServicePrincipal -Identity $__MtSession.Permissions.AccountId
-            if ($servicePrincipal) {
-                # Get role assignments
-                $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $servicePrincipal.ObjectId).Role
-                Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRole).Count)'"
-            }else {
-                Write-Verbose "Not service principal with object id '$($__MtSession.Permissions.AccountId)' found"
-            }
+                try {
+                    $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $__MtSession.Permissions.AccountId).Role | Select-Object -Unique
+                    Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRole).Count)'"
+                } catch {
+                    Write-Verbose "No role assignments found for user or insufficient permissions: $($_.Exception.Message)"
+                    $__MtSession.Permissions.ExchangeRole = @()
+                    return
+                }
         }
         return
     }
