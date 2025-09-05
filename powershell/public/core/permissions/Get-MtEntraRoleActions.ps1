@@ -6,6 +6,11 @@ function Get-MtEntraRoleActions {
 
     try {
 
+        if (-not (Test-MtConnection Graph)) {
+            Write-Verbose "No microsoft graph connection found"
+            return
+        }
+
         # Get role assignments for current user that are not limited by administrativ units
         $userRoleAssignments = Invoke-MtGraphRequest -RelativeUri "roleManagement/directory/roleAssignments" -Filter "principalId eq '$($__MtSession.Permissions.AccountId)' and directoryScopeId eq '/'"
 
