@@ -40,7 +40,7 @@ function Get-AzureRoleActions {
                 foreach ($assignment in $roleAssignments) {
                     $roleDefResponse = Invoke-MtAzureRequest -RelativeUri "$($assignment.roleDefinitionId)" -ApiVersion "2022-04-01" -Filter "principalId eq '$($__MtSession.Identity.AccountId)'" | Select-Object -ExpandProperty properties
                     if ($roleDefResponse.permissions.actions -eq "*") {
-                        $__MtSession.Permissions.AzureAction = $roleDefResponse.permissions.actions
+                        $__MtSession.Permissions.AzureActions = $roleDefResponse.permissions.actions
                         Write-Verbose "Found all Azure RBAC role assignments for principal"
                         return
                     }else {
@@ -54,7 +54,7 @@ function Get-AzureRoleActions {
         }
 
         # Set session variable
-        $__MtSession.Permissions.AzureAction = $assignments | Sort-Object -Unique
+        $__MtSession.Permissions.AzureActions = $assignments | Sort-Object -Unique
         Write-Verbose "Found $($roleAssignments.Count) Azure RBAC role assignments for principal"
         return
     }
