@@ -22,14 +22,7 @@ function Get-AzureRoleActions {
     try {
         if (-not (Test-MtConnection Azure)) {
             Write-Verbose "No Azure connection found"
-            return [PSCustomObject]@{
-                Available = $false
-                RoleAssignments = @()
-                RoleNames = @()
-                Scopes = @()
-                PrincipalId = $null
-                Error = "No Azure connection"
-            }
+            return
         }
 
         # Get all management groups in the tenant and filter the tenant root management group by id
@@ -46,7 +39,13 @@ function Get-AzureRoleActions {
             if ($roleAssignments) {
                 foreach ($assignment in $roleAssignments) {
                     $roleDefResponse = Invoke-MtAzureRequest -RelativeUri "$($assignment.roleDefinitionId)" -ApiVersion "2022-04-01" -Filter "principalId eq '$($__MtSession.Identity.AccountId)'" | Select-Object -ExpandProperty properties
-                    $assignments += $roleDefResponse.permissions.actions
+                    if ($roleDefResponse.permissions.actions -eq "*") {
+                        $__MtSession.Permissions.AzureAction = $roleDefResponse.permissions.actions
+                        Write-Verbose "Found all Azure RBAC role assignments for principal"
+                        return
+                    }else {
+                        $assignments += $roleDefResponse.permissions.actions
+                    }
                 }
             }
         }
@@ -56,12 +55,7 @@ function Get-AzureRoleActions {
 
         # Set session variable
         $__MtSession.Permissions.AzureAction = $assignments | Sort-Object -Unique
-
-        if ($assignments -eq "*") {
-            Write-Verbose "Found all Azure RBAC role assignments for principal"
-        } else {
-            Write-Verbose "Found $($roleAssignments.Count) Azure RBAC role assignments for principal"
-        }
+        Write-Verbose "Found $($roleAssignments.Count) Azure RBAC role assignments for principal"
         return
     }
     catch {
