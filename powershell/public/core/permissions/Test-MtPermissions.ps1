@@ -14,14 +14,14 @@
 
         # Checks if the current session is connected to the specified service
         [Parameter(Position = 2, Mandatory = $true)]
-        [string[]]$NeededPermission
+        [string[]]$NeededPermissions
     )
 
     process {
         # Get the appropriate permissions collection based on PermissionType
         $permissionsCollection = switch ($PermissionType) {
             'GraphAPIPermissions' { $__MtSession.Permissions.GraphAPIPermissions }
-            'EntraActions' { $__MtSession.Permissions.Entra }
+            'EntraActions' { $__MtSession.Permissions.EntraActions }
             'AzureActions' { $__MtSession.Permissions.AzureActions }
             'ExchangeRoles' { $__MtSession.Permissions.ExchangeRoles }
         }
@@ -38,18 +38,53 @@
 
         # Check permissions based on RequirementType
         if ($RequirementType -eq 'All') {
-            # Check if all permissions are present
-            foreach ($permission in $NeededPermission) {
-                if ($permissionsCollection -notcontains $permission) {
+            # Check if all permissions are present or covered
+            foreach ($neededPermission in $NeededPermissions) {
+                $permissionFound = $false
+
+                foreach ($userPermission in $permissionsCollection) {
+                    if ($PermissionType -eq 'AzureActions') {
+                        if (Test-AzureActionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
+                            $permissionFound = $true
+                            break
+                        }
+                    } elseif ($PermissionType -eq 'EntraActions') {
+                        if (Test-EntraActionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
+                            $permissionFound = $true
+                            break
+                        }
+                    } else {
+                        # For other permission types, use exact matching
+                        if ($userPermission -eq $neededPermission) {
+                            $permissionFound = $true
+                            break
+                        }
+                    }
+                }
+
+                if (-not $permissionFound) {
                     return $false
                 }
             }
             return $true
         } else {
-            # Check if any permission is present (default behavior)
-            foreach ($permission in $NeededPermission) {
-                if ($permissionsCollection -contains $permission) {
-                    return $true
+            # Check if any permission is present or covered (default behavior)
+            foreach ($neededPermission in $NeededPermissions) {
+                foreach ($userPermission in $permissionsCollection) {
+                    if ($PermissionType -eq 'AzureActions') {
+                        if (Test-AzureActionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
+                            return $true
+                        }
+                    } elseif ($PermissionType -eq 'EntraActions') {
+                        if (Test-EntraActionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
+                            return $true
+                        }
+                    } else {
+                        # For other permission types, use exact matching
+                        if ($userPermission -eq $neededPermission) {
+                            return $true
+                        }
+                    }
                 }
             }
             return $false
