@@ -1,4 +1,5 @@
 ﻿
+#https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference
 function Get-MtEntraRoleActions {
     [CmdletBinding()]
     [OutputType([PSCustomObject])]

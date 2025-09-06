@@ -5,6 +5,7 @@
 .DESCRIPTION
     This function retrieves all Azure RBAC role actions for the current user or service principal
     from role assignments at the tenant root management group scope.
+    https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 
 .EXAMPLE
     Get-AzureRbacRoles
