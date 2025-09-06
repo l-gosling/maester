@@ -53,6 +53,11 @@
                             $permissionFound = $true
                             break
                         }
+                    } elseif ($PermissionType -eq 'GraphAPIPermissions') {
+                        if (Test-GraphApiPermissionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
+                            $permissionFound = $true
+                            break
+                        }
                     } else {
                         # For other permission types, use exact matching
                         if ($userPermission -eq $neededPermission) {
@@ -77,6 +82,10 @@
                         }
                     } elseif ($PermissionType -eq 'EntraActions') {
                         if (Test-EntraActionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
+                            return $true
+                        }
+                    } elseif ($PermissionType -eq 'GraphAPIPermissions') {
+                        if (Test-GraphApiPermissionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
                             return $true
                         }
                     } else {
