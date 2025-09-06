@@ -25,7 +25,7 @@ function Test-MtVaultSoftDelete {
         return $null
     }
 
-    if (!(Test-MtPermissions -PermissionType AzureActions -RequirementType All -NeededPermission @(
+    if (!(Test-MtPermissions -PermissionType AzureActions -RequirementType All -NeededPermissions @(
         "Microsoft.RecoveryServices/vaults/read",
         "Microsoft.RecoveryServices/vaults/backupconfig/read",
         "Microsoft.ResourceGraph/resources/read"
