@@ -30,6 +30,7 @@ function Test-MtVaultSoftDelete {
         "Microsoft.RecoveryServices/vaults/backupconfig/read",
         "Microsoft.ResourceGraph/resources/read"
     ))) {
+        Add-MtTestResultDetail -SkippedBecause Custom -SkippedCustomReason "Azure role 'reader' must be granted to your account on root management group"
         return $null
     }
 
