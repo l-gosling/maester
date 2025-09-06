@@ -5,7 +5,6 @@ function Get-MtGraphPermissions {
     param()
 
     try {
-
         if (-not (Test-MtConnection Graph)) {
             Write-Verbose "No microsoft graph connection found"
             return
