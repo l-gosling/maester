@@ -15,10 +15,29 @@ function Test-MtEntraDeviceJoinRestricted {
     [OutputType([bool])]
     param()
 
-    # Add the connection check
+    # Connection check
     if (-not (Test-MtConnection Graph)) {
         Add-MtTestResultDetail -SkippedBecause NotConnectedGraph
         return $null
+    }
+
+    # Permission check
+    if ($__MtSession.Identity.AuthType -eq 'Delegated') {
+
+    } else {
+        if (-not
+            ((Test-MtPermissions -PermissionType GraphAPIPermissions -RequirementType All -NeededPermissions @(
+                "User.Read.All",
+                "Group.Read.All",
+                "Policy.Read.DeviceConfiguration"
+                ))) -or (Test-MtPermissions -PermissionType EntraActions -RequirementType All -NeededPermissions @(
+                "microsoft.directory/deviceRegistrationPolicy/standard/read",
+                "microsoft.directory/users/standard/read",
+                "microsoft.directory/groups/standard/read"
+            ))) {
+            Add-MtTestResultDetail -SkippedBecause Custom -SkippedCustomReason "Azure role 'reader' must be granted to your account on root management group"
+            return $null
+        }
     }
 
     Write-Verbose 'Test-MtEntraDeviceJoinRestricted: Checking if device join is restricted to selected users/groups or none..'
