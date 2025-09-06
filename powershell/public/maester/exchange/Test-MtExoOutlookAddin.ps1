@@ -25,6 +25,21 @@ function Test-MtExoOutlookAddin {
         return $null
     }
 
+    if (!(Test-MtPermissions -PermissionType ExchangeRole `
+            -NeededPermission @(
+                                "View-Only Configuration",
+                                "View-Only Organization Management",
+                                "Role Management",
+                                "Organization Management"
+                            ))) {
+        if ($__MtSession.Identity.AuthType -eq 'Delegated') {
+            Add-MtTestResultDetail -SkippedBecause Custom -SkippedCustomReason "Entra id role 'global reader' must be granted to your account"
+        } else {
+            Add-MtTestResultDetail -SkippedBecause Custom -SkippedCustomReason "Exchange role 'View-Only Configuration' must granted to service principal with app id '$($__MtSession.Identity.ApplicationId)'"
+        }
+        return $null
+    }
+
     try {
         Write-Verbose "Getting Role Assignment Policies..."
         $roleAssignmentPolicy = Get-MtExo -Request RoleAssignmentPolicy
