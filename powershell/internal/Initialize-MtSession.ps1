@@ -22,6 +22,7 @@ function Initialize-MtSession {
         Get-MtGraphPermissions
         Get-MtEntraRoleActions
         Get-MtExchangeRoles
+        Get-AzureRoleActions
 
         Write-Verbose "Permission retrieval completed successfully"
     }
