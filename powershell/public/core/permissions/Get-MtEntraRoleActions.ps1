@@ -12,7 +12,7 @@ function Get-MtEntraRoleActions {
         }
 
         # Get role assignments for current user that are not limited by administrativ units
-        $userRoleAssignments = Invoke-MtGraphRequest -RelativeUri "roleManagement/directory/roleAssignments" -Filter "principalId eq '$($__MtSession.Permissions.AccountId)' and directoryScopeId eq '/'"
+        $userRoleAssignments = Invoke-MtGraphRequest -RelativeUri "roleManagement/directory/roleAssignments" -Filter "principalId eq '$($__MtSession.Identity.AccountId)' and directoryScopeId eq '/'"
 
         # Get role definitions for assigned roles only
         $assignedRoleIds = $userRoleAssignments.RoleDefinitionId

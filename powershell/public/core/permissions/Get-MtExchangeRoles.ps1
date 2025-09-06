@@ -26,8 +26,8 @@ function Get-MtExchangeRoles {
             return
         }
 
-        if ($__MtSession.Permissions.AuthType -eq 'Delegated') {
-            $currentUser = Get-User -Identity $__MtSession.Permissions.AccountName
+        if ($__MtSession.Identity.AuthType -eq 'Delegated') {
+            $currentUser = Get-User -Identity $__MtSession.Identity.AccountName
             if ($currentUser) {
                 try {
                     $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $currentUser.DistinguishedName).Role | Select-Object -Unique
@@ -38,11 +38,11 @@ function Get-MtExchangeRoles {
                 }
                 Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRole).Count)'"
             } else {
-                Write-Verbose "Current user with id '$($__MtSession.Permissions.AccountId)' not found"
+                Write-Verbose "Current user with id '$($__MtSession.Identity.AccountId)' not found"
             }
-        } elseif ($__MtSession.Permissions.AuthType -eq 'AppOnly' -or $__MtSession.Permissions.AuthType -eq 'ManagedIdentity' ) {
+        } elseif ($__MtSession.Identity.AuthType -eq 'AppOnly' -or $__MtSession.Identity.AuthType -eq 'ManagedIdentity' ) {
                 try {
-                    $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $__MtSession.Permissions.AccountId).Role | Select-Object -Unique
+                    $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $__MtSession.Identity.AccountId).Role | Select-Object -Unique
                     Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRole).Count)'"
                 } catch {
                     Write-Verbose "No role assignments found for user or insufficient permissions: $($_.Exception.Message)"

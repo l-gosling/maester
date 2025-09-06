@@ -15,21 +15,21 @@ function Get-MtGraphPermissions {
         $context = Get-MgContext
 
         # Get additional informations from context data
-        $__MtSession.Permissions.AuthType = $context.AuthType
-        Write-Verbose "Authtype is '$($__MtSession.Permissions.AuthType)'"
+        $__MtSession.Identity.AuthType = $context.AuthType
+        Write-Verbose "Authtype is '$($__MtSession.Identity.AuthType)'"
 
-        $__MtSession.Permissions.ApplicationId = $context.ClientId
-        Write-Verbose "ApplicationId is '$($__MtSession.Permissions.ApplicationId)'"
+        $__MtSession.Identity.ApplicationId = $context.ClientId
+        Write-Verbose "ApplicationId is '$($__MtSession.Identity.ApplicationId)'"
 
         $__MtSession.Permissions.GraphAPIPermissions = $context.Scopes
         Write-Verbose "Graph API permissions count is '$(($__MtSession.Permissions.GraphAPIPermissions).Count)'"
 
         if ($context.AuthType -eq 'Delegated') {
-            $__MtSession.Permissions.AccountName = $context.Account
-            $__MtSession.Permissions.AccountId = (Invoke-MtGraphRequest -RelativeUri "me").Id
+            $__MtSession.Identity.AccountName = $context.Account
+            $__MtSession.Identity.AccountId = (Invoke-MtGraphRequest -RelativeUri "me").Id
         } elseif ($context.AuthType -eq 'AppOnly' -or $context.AuthType -eq 'ManagedIdentity' ) {
-            $__MtSession.Permissions.AccountName = $context.AppName
-            $__MtSession.Permissions.AccountId = (Invoke-MtGraphRequest -RelativeUri servicePrincipals -Filter "appId eq '$($context.ClientId)'").id
+            $__MtSession.Identity.AccountName = $context.AppName
+            $__MtSession.Identity.AccountId = (Invoke-MtGraphRequest -RelativeUri servicePrincipals -Filter "appId eq '$($context.ClientId)'").id
         }
         return
     }
