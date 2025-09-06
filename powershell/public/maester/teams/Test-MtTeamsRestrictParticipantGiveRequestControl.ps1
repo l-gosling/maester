@@ -24,8 +24,17 @@ function Test-MtTeamsRestrictParticipantGiveRequestControl {
         $TeamsMeetingPolicy
     )
 
+    # Connection check
     if (!(Test-MtConnection Teams)) {
         Add-MtTestResultDetail -SkippedBecause NotConnectedTeams
+        return $null
+    }
+
+    # Permission check
+    if (!(Test-MtPermissions -PermissionType EntraActions -RequirementType Any -NeededPermissions @(
+        "microsoft.teams/allEntities/allProperties/read"
+    ))) {
+        Add-MtTestResultDetail -SkippedBecause Custom -SkippedCustomReason "Entra role 'Teams Reader' must be granted to your account"
         return $null
     }
 
