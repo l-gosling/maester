@@ -3,7 +3,7 @@
     [OutputType([bool])]
     param(
         # Checks if the current session is connected to the specified service
-        [ValidateSet('GraphAPIPermissions', 'EntraAction', 'ExchangeRole')]
+        [ValidateSet('GraphAPIPermissions', 'EntraActions', 'ExchangeRoles')]
         [Parameter(Position = 0, Mandatory = $true)]
         [string]$PermissionType,
 
@@ -21,8 +21,8 @@
         # Get the appropriate permissions collection based on PermissionType
         $permissionsCollection = switch ($PermissionType) {
             'GraphAPIPermissions' { $__MtSession.Permissions.GraphAPIPermissions }
-            'EntraAction' { $__MtSession.Permissions.Entra }
-            'ExchangeRole' { $__MtSession.Permissions.ExchangeRole }
+            'EntraActions' { $__MtSession.Permissions.Entra }
+            'ExchangeRoles' { $__MtSession.Permissions.ExchangeRoles }
         }
 
         # If no permissions collection exists, return false

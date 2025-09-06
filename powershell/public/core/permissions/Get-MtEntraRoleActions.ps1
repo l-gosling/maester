@@ -26,8 +26,8 @@ function Get-MtEntraRoleActions {
         $roleDefinitions = $roleDefinitions | Select-Object -Unique
 
         # Add permissions to script variable
-        $__MtSession.Permissions.EntraAction = $roleDefinitions
-        Write-Verbose "Entra role actions count is '$(($__MtSession.Permissions.EntraAction).Count)'"
+        $__MtSession.Permissions.EntraActions = $roleDefinitions
+        Write-Verbose "Entra role actions count is '$(($__MtSession.Permissions.EntraActions).Count)'"
 
         return
     }

@@ -30,23 +30,23 @@ function Get-MtExchangeRoles {
             $currentUser = Get-User -Identity $__MtSession.Identity.AccountName
             if ($currentUser) {
                 try {
-                    $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $currentUser.DistinguishedName).Role | Select-Object -Unique
+                    $__MtSession.Permissions.ExchangeRoles = (Get-ManagementRoleAssignment -RoleAssignee $currentUser.DistinguishedName).Role | Select-Object -Unique
                 } catch {
                     Write-Verbose "No role assignments found for user or insufficient permissions: $($_.Exception.Message)"
-                    $__MtSession.Permissions.ExchangeRole = @()
+                    $__MtSession.Permissions.ExchangeRoles = @()
                     return
                 }
-                Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRole).Count)'"
+                Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRoles).Count)'"
             } else {
                 Write-Verbose "Current user with id '$($__MtSession.Identity.AccountId)' not found"
             }
         } elseif ($__MtSession.Identity.AuthType -eq 'AppOnly' -or $__MtSession.Identity.AuthType -eq 'ManagedIdentity' ) {
                 try {
-                    $__MtSession.Permissions.ExchangeRole = (Get-ManagementRoleAssignment -RoleAssignee $__MtSession.Identity.AccountId).Role | Select-Object -Unique
-                    Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRole).Count)'"
+                    $__MtSession.Permissions.ExchangeRoles = (Get-ManagementRoleAssignment -RoleAssignee $__MtSession.Identity.AccountId).Role | Select-Object -Unique
+                    Write-Verbose "Exchange role count is '$(($__MtSession.Permissions.ExchangeRoles).Count)'"
                 } catch {
                     Write-Verbose "No role assignments found for user or insufficient permissions: $($_.Exception.Message)"
-                    $__MtSession.Permissions.ExchangeRole = @()
+                    $__MtSession.Permissions.ExchangeRoles = @()
                     return
                 }
         }

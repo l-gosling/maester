@@ -25,7 +25,7 @@ function Test-MtExoOutlookAddin {
         return $null
     }
 
-    if (!(Test-MtPermissions -PermissionType ExchangeRole `
+    if (!(Test-MtPermissions -PermissionType ExchangeRoles `
             -NeededPermission @(
                                 "View-Only Configuration",
                                 "View-Only Organization Management",

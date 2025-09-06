@@ -12,7 +12,7 @@
 .EXAMPLE
     Get-AzureRbacRoles
     # Check if specific action is available
-    $__MtSession.Permissions.ExchangeRole -contains "Microsoft.Authorization/roleAssignments/read"
+    $__MtSession.Permissions.ExchangeRoles -contains "Microsoft.Authorization/roleAssignments/read"
 #>
 function Get-AzureRoleActions {
     [CmdletBinding()]
