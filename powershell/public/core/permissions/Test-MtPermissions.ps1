@@ -7,14 +7,14 @@
         [Parameter(Position = 0, Mandatory = $true)]
         [string]$PermissionType,
 
-        # Checks if the current session is connected to the specified service
-        [Parameter(Position = 1, Mandatory = $true)]
-        [string[]]$NeededPermission,
-
         # Defines whether at least one (any) or all permissions must be covered
         [ValidateSet('Any', 'All')]
-        [Parameter(Position = 2)]
-        [string]$RequirementType = 'Any'
+        [Parameter(Position = 1)]
+        [string]$RequirementType = 'Any',
+
+        # Checks if the current session is connected to the specified service
+        [Parameter(Position = 2, Mandatory = $true)]
+        [string[]]$NeededPermission
     )
 
     process {
