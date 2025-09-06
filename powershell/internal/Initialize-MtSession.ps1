@@ -26,7 +26,7 @@ function Initialize-MtSession {
         Write-Verbose "Permission retrieval completed successfully"
     }
     catch {
-        Write-Warning "Error retrieving permissions2: $($_.Exception.Message)"
+        Write-Warning "Error retrieving permissions: $($_.Exception.Message)"
         return $null
     }
 
