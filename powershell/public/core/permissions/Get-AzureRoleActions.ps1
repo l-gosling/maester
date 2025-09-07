@@ -26,15 +26,15 @@ function Get-AzureRoleActions {
             return
         }
 
-        # Get all management groups in the tenant and filter the tenant root management group by id
-        $rootManagementGroup = Get-MtAzureManagementGroup | Where-Object { $_.id -match "$($_.properties.tenantid)$" }
-
-        # Get role assignments for all scopes
-        $assignments = @()
-
         try {
+            # Get all management groups in the tenant and filter the tenant root management group by id
+            $rootManagementGroup = Get-MtAzureManagementGroup -ErrorAction Stop | Where-Object { $_.id -match "$($_.properties.tenantid)$" }
+
+            # Get role assignments for all scopes
+            $assignments = @()
+
             # Get role assigments for tenant root management group
-            $roleAssignments = (Invoke-MtAzureRequest -RelativeUri "providers/Microsoft.Management/managementGroups/$($rootManagementGroup.name)/providers/Microsoft.Authorization/roleAssignments" -ApiVersion "2020-04-01-preview" -Filter "principalId eq '$($__MtSession.Identity.AccountId)'" | Select-Object -ExpandProperty value).properties
+            $roleAssignments = (Invoke-MtAzureRequest -RelativeUri "providers/Microsoft.Management/managementGroups/$($rootManagementGroup.name)/providers/Microsoft.Authorization/roleAssignments" -ApiVersion "2020-04-01-preview" -Filter "principalId eq '$($__MtSession.Identity.AccountId)'" | Select-Object -ExpandProperty value -ErrorAction Stop).properties
 
             # Get all actions for tenant root management group
             if ($roleAssignments) {

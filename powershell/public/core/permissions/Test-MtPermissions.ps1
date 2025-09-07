@@ -28,11 +28,17 @@
 
         # If no permissions collection exists, return false
         if (-not $permissionsCollection) {
+            Write-Verbose "No permissions collection found for $PermissionType"
+            Write-Output "No permissions collection found for $PermissionType"
             return $false
         }
+        Write-Output "1: $permissionsCollection"
+        Write-Output "2: $neededPermissions"
+
 
         # Return true if asterisk is the value
         if ($permissionsCollection -eq "*") {
+            Write-Verbose "PermissionCollection contins '*'"
             return $true
         }
 
@@ -51,6 +57,7 @@
                     } elseif ($PermissionType -eq 'EntraActions') {
                         if (Test-EntraActionHierarchy -UserPermission $userPermission -NeededPermission $neededPermission) {
                             $permissionFound = $true
+                            Write-Verbose "PermissionsCollection contains '$neededPermission'"
                             break
                         }
                     } elseif ($PermissionType -eq 'GraphAPIPermissions') {

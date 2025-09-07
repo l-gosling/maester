@@ -29,7 +29,7 @@ function Get-MtPermissions {
         Get-MtExchangeRoles
 
         Write-Verbose "Permission retrieval completed successfully"
-        return $permissionObject
+        return
     }
     catch {
         Write-Warning "Error retrieving permissions: $($_.Exception.Message)"

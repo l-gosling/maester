@@ -27,7 +27,7 @@ function Get-MtExchangeRoles {
         }
 
         if ($__MtSession.Identity.AuthType -eq 'Delegated') {
-            $currentUser = Get-User -Identity $__MtSession.Identity.AccountName
+            $currentUser = Get-User -Identity $__MtSession.Identity.AccountName -ErrorAction Stop
             if ($currentUser) {
                 try {
                     $__MtSession.Permissions.ExchangeRoles = (Get-ManagementRoleAssignment -RoleAssignee $currentUser.DistinguishedName).Role | Select-Object -Unique
@@ -53,7 +53,6 @@ function Get-MtExchangeRoles {
         return
     }
     catch {
-        Write-Verbose "Error getting Graph permissions: $($_.Exception.Message)"
-        throw $_
+        Write-Verbose "Error getting exchange online roles: $($_.Exception.Message)"
     }
 }
