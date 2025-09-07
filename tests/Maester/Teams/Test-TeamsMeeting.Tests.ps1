@@ -1,7 +1,21 @@
 BeforeDiscovery {
-    try {
 
-        $TeamsMeetingPolicy = Get-CsTeamsMeetingPolicy
+    # Connection check
+    if (!(Test-MtConnection Teams)) {
+        Add-MtTestResultDetail -SkippedBecause NotConnectedTeams
+        return $null
+    }
+
+    # Permission check
+    if (!(Test-MtPermissions -PermissionType EntraActions -RequirementType Any -NeededPermissions @(
+        "microsoft.teams/allEntities/allProperties/read"
+    )))  {
+        Add-MtTestResultDetail -SkippedBecause Custom -SkippedCustomReason "Entra role 'Teams Reader' must be granted to your account"
+        return $null
+    }
+
+    try {
+        $TeamsMeetingPolicy = Get-CsTeamsMeetingPolicy -ErrorAction Stop
         Write-Verbose "Found $($TeamsMeetingPolicy.Count) Teams Meeting policies"
     } catch {
         Write-Verbose "Session is not established, run Connect-MicrosoftTeams before requesting access token"
