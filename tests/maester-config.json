@@ -1,6 +1,12 @@
 {
   "GlobalSettings": {
-    "EmergencyAccessAccounts": []
+    "EmergencyAccessAccounts": [],
+    "AdditionalModules": [
+      "Microsoft.Graph.Authentication",
+      "Az.Accounts",
+      "ExchangeOnlineManagement",
+      "MicrosoftTeams"
+    ]
   },
   "TestSettings": [
     {
@@ -956,7 +962,16 @@
     {
       "Id": "MT.1041",
       "Severity": "High",
-      "Title": "Ensure users installing Outlook add-ins is not allowed"
+      "Title": "Ensure users installing Outlook add-ins is not allowed",
+      "NeededPermissions": {
+        "ExchangeRoles": [
+          "View-Only Configuration",
+          "Mail Recipients",
+          "O365SupportViewConfig",
+          "Mail Recipient Creation",
+          "Role Management"
+        ]
+      }
     },
     {
       "Id": "MT.1042",

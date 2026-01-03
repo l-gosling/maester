@@ -25,6 +25,14 @@ function Test-MtExoOutlookAddin {
         return $null
     }
 
+    # Get permissions from config using the test ID from Pester context
+    $testConfig = Get-MtMaesterConfigTestSetting -TestId (Get-MtPesterTestId)
+
+    if (!(Test-MtPermissions -PermissionType ExchangeRoles -NeededPermission $testConfig.NeededPermissions.ExchangeRoles)) {
+        Add-MtTestResultDetail -SkippedBecause Custom -SkippedCustomReason (Get-MtPermissionErrorMessage -NeededPermissions $testConfig.NeededPermissions)
+        return $null
+    }
+
     try {
         Write-Verbose "Getting Role Assignment Policies..."
         $roleAssignmentPolicy = Get-MtExo -Request RoleAssignmentPolicy
