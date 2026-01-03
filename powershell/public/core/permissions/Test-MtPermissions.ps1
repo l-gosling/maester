@@ -32,9 +32,6 @@
             Write-Output "No permissions collection found for $PermissionType"
             return $false
         }
-        Write-Output "1: $permissionsCollection"
-        Write-Output "2: $neededPermissions"
-
 
         # Return true if asterisk is the value
         if ($permissionsCollection -eq "*") {
