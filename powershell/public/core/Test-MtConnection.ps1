@@ -135,11 +135,20 @@
         if ($Service -contains 'Teams' -or $Service -contains 'All') {
             $IsConnected = $false
             try {
-                $MtConnections.Teams = Get-CsTenant
+                $MtConnections.Teams = Get-CsTenant -ErrorAction Stop
                 $IsConnected = $null -ne ($MtConnections.Teams)
             } catch {
-                # Re-test
-                Write-Debug "Teams: $false"
+                # Check if the error indicates we need to connect or if it's an access denied (which means we're connected)
+                if ($_.Exception.Message -like "*You must call the Connect-MicrosoftTeams cmdlet*") {
+                    $IsConnected = $false
+                    Write-Debug "Teams: $false - Not connected"
+                } elseif ($_.Exception.Message -like "*Access Denied*") {
+                    $IsConnected = $true
+                    Write-Debug "Teams: $true - Connected but access denied"
+                } else {
+                    $IsConnected = $false
+                    Write-Debug "Teams: $false - Other error: $($_.Exception.Message)"
+                }
             }
             Write-Verbose "Teams: $IsConnected"
             if (!$IsConnected) { $ConnectionState = $false }

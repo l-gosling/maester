@@ -95,6 +95,7 @@
     'Invoke-MtGraphSecurityQuery',
     'Get-MtMaesterApp', 'New-MtMaesterApp', 'Update-MtMaesterApp', 'Add-MtMaesterAppFederatedCredential',
     'Resolve-SpfRecord', 'Send-MtMail', 'Send-MtTeamsMessage',
+    'Get-MtPermissions','Get-MtGraphPermissions','Get-MtEntraRoleActions','Get-MtExchangeRoles','Test-MtPermissions',
     'Test-MtAppManagementPolicyEnabled', 'Test-MtAppRegistrationsWithSecrets', 'Test-MtSpExchangeAppAccessPolicy',
     'Test-MtServicePrincipalsForAllUsers', 'Test-MtAuthenticationPolicyReferencedObjectsExist',
     'Test-MtCaAllAppsExists', 'Test-MtCaApplicationEnforcedRestriction', 'Test-MtCaBlockLegacyExchangeActiveSyncAuthentication',

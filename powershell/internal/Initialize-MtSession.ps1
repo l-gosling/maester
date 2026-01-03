@@ -20,4 +20,19 @@ function Initialize-MtSession {
     }
 
     $__MtSession.AdminPortalUrl = Get-MtAdminPortalUrl -Environment $environment
+
+    try {
+        Write-Verbose "Retrieving permissions from all connected services..."
+
+        Get-MtGraphPermissions
+        Get-MtEntraRoleActions
+        Get-MtExchangeRoles
+        Get-AzureRoleActions
+
+        Write-Verbose "Permission retrieval completed successfully"
+    }
+    catch {
+        Write-Warning "Error retrieving permissions: $($_.Exception.Message)"
+        return $null
+    }
 }
