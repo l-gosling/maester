@@ -49,10 +49,11 @@ function Get-PromptResult($prompt) {
                 try {
                     $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
                     $errorBody = $streamReader.ReadToEnd()
-                    Write-Host "--- API ERROR DETAILS ---" -ForegroundColor Red
+                    Write-Host "`n*****************************************" -ForegroundColor Red
+                    Write-Host "CRITICAL API ERROR ENCOUNTERED" -ForegroundColor Red
                     Write-Host "Status Code: $errorCode"
                     Write-Host "Error Body: $errorBody"
-                    Write-Host "-------------------------"
+                    Write-Host "*****************************************\n" -ForegroundColor Red
                 } catch {
                     Write-Host "Could not read error body." -ForegroundColor Gray
                 }
@@ -65,7 +66,8 @@ function Get-PromptResult($prompt) {
                 Start-Sleep -Seconds $sleepTime
             } else {
                 # Stop immediately for 404, 403, 401, 400
-                throw $_
+                Write-Host "Non-retryable error ($errorCode). Terminating workflow." -ForegroundColor Red
+                exit 1
             }
         }
     }
@@ -197,6 +199,8 @@ try {
             Set-MtMaesterConfig -ConfigFilePath $configPath -MaesterConfig $maesterConfig
             Write-Host "Updated metadata for $($testResult.Id)" -ForegroundColor Cyan
         } catch {
+            # Rethrow if it's a terminating error (handled in Get-PromptResult)
+            if ($_.Exception.Message -match "Terminating") { throw $_ }
             Write-Warning "Failed to process $($testResult.Id): $($_.Exception.Message)"
         }
         
