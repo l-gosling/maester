@@ -188,8 +188,15 @@ try {
             $metadata = $aiResponse | ConvertFrom-Json
             
             if ($existingSetting) {
-                $existingSetting.Severity = $metadata.Severity
-                $existingSetting.RequiredPermissions = $metadata.RequiredPermissions
+                # Dynamically add properties if they don't exist (prevents "property not found" errors)
+                $props = @("Severity", "RequiredPermissions")
+                foreach ($p in $props) {
+                    if ($null -eq $existingSetting.PSObject.Properties[$p]) {
+                        $existingSetting | Add-Member -MemberType NoteProperty -Name $p -Value $metadata.$p
+                    } else {
+                        $existingSetting.$p = $metadata.$p
+                    }
+                }
             } else {
                 # Create a new test setting object
                 $testSetting = [PSCustomObject]@{
