@@ -10,7 +10,9 @@ function Get-PromptResult($prompt) {
         Write-Host "You can get a new key from https://ai.google.dev/gemini-api/docs/api-key"
         exit 1
     }
-    $uri = "https://generativelanguage.googleapis.com/v1/models/gemini-flash-latest:generateContent?key=$apiKey"
+    
+    # Using v1beta for better compatibility with model aliases
+    $uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$apiKey"
 
 
     $Body = @{
@@ -39,12 +41,30 @@ function Get-PromptResult($prompt) {
             $Response = Invoke-RestMethod -Uri $Uri -Method Post -Headers $Headers -Body $Body
             return $Response.candidates.content.parts.text
         } catch {
-            if ($_.Exception.Message -match "429") {
+            $errorCode = 0
+            if ($null -ne $_.Exception.Response) {
+                $errorCode = [int]$_.Exception.Response.StatusCode
+                
+                # Detailed error logging for non-429 errors (like 404 or 400)
+                try {
+                    $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
+                    $errorBody = $streamReader.ReadToEnd()
+                    Write-Host "--- API ERROR DETAILS ---" -ForegroundColor Red
+                    Write-Host "Status Code: $errorCode"
+                    Write-Host "Error Body: $errorBody"
+                    Write-Host "-------------------------"
+                } catch {
+                    Write-Host "Could not read error body." -ForegroundColor Gray
+                }
+            }
+
+            if ($errorCode -eq 429) {
                 $retryCount++
                 $sleepTime = $waitInterval * $retryCount
                 Write-Host "Rate limit hit (429). Retrying in $sleepTime seconds... (Attempt $retryCount/$maxRetries)" -ForegroundColor Yellow
                 Start-Sleep -Seconds $sleepTime
             } else {
+                # Stop immediately for 404, 403, 401, 400
                 throw $_
             }
         }
@@ -57,11 +77,25 @@ function Get-MtMaesterConfig($ConfigFilePath) {
     if (-not (Test-Path $ConfigFilePath)) {
         Write-Host "Maester config file not found at: $ConfigFilePath. Creating a new one." -ForegroundColor Yellow
         $maesterConfig = @{
+            GlobalSettings = @{
+                EmergencyAccessAccounts = @()
+                DataverseEnvironmentUrl = ""
+                SkipPermissionCheck = $false
+            }
             TestSettings = @()
         }
     } else {
         Write-Host "Maester config file found at: $ConfigFilePath. Loading existing settings." -ForegroundColor Green
         $maesterConfig = Get-Content -Path $ConfigFilePath -Raw | ConvertFrom-Json
+        
+        # Ensure GlobalSettings exists
+        if (-not $maesterConfig.GlobalSettings) {
+            $maesterConfig | Add-Member -MemberType NoteProperty -Name "GlobalSettings" -Value @{
+                EmergencyAccessAccounts = @()
+                DataverseEnvironmentUrl = ""
+                SkipPermissionCheck = $false
+            }
+        }
     }
     return $maesterConfig
 }
