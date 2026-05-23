@@ -11,8 +11,8 @@ function Get-PromptResult($prompt) {
         exit 1
     }
     
-    # Using v1beta for better compatibility with model aliases
-    $uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$apiKey"
+    # Reverting to the original project model and version
+    $uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey"
 
 
     $Body = @{
@@ -45,18 +45,25 @@ function Get-PromptResult($prompt) {
             if ($null -ne $_.Exception.Response) {
                 $errorCode = [int]$_.Exception.Response.StatusCode
                 
-                # Detailed error logging for non-429 errors (like 404 or 400)
+                # Robust error body extraction
                 try {
-                    $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
-                    $errorBody = $streamReader.ReadToEnd()
-                    Write-Host "`n*****************************************" -ForegroundColor Red
-                    Write-Host "CRITICAL API ERROR ENCOUNTERED" -ForegroundColor Red
-                    Write-Host "Status Code: $errorCode"
-                    Write-Host "Error Body: $errorBody"
-                    Write-Host "*****************************************\n" -ForegroundColor Red
+                    $responseStream = $_.Exception.Response.GetResponseStream()
+                    if ($null -ne $responseStream) {
+                        $streamReader = [System.IO.StreamReader]::new($responseStream)
+                        $errorBody = $streamReader.ReadToEnd()
+                        Write-Host "`n*****************************************" -ForegroundColor Red
+                        Write-Host "CRITICAL API ERROR ENCOUNTERED" -ForegroundColor Red
+                        Write-Host "Status Code: $errorCode"
+                        Write-Host "Error Body: $errorBody"
+                        Write-Host "*****************************************\n" -ForegroundColor Red
+                    } else {
+                        Write-Host "API Error: Status Code $errorCode (No body returned)" -ForegroundColor Red
+                    }
                 } catch {
-                    Write-Host "Could not read error body." -ForegroundColor Gray
+                    Write-Host "API Error: Status Code $errorCode (Error reading body: $($_.Exception.Message))" -ForegroundColor Red
                 }
+            } else {
+                 Write-Host "CRITICAL API ERROR: $($_.Exception.Message)" -ForegroundColor Red
             }
 
             if ($errorCode -eq 429) {
