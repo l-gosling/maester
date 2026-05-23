@@ -2,6 +2,10 @@
 # then determine the severity and required permissions of the test using the Gemini AI API.
 # The test-results.json file is a copy of one of the latest runs of Invoke-Maester.
 
+param(
+    [switch]$Force
+)
+
 function Get-PromptResult($prompt) {
     $apiKey = $Env:GeminiApiKey
     if (-not $apiKey) {
@@ -162,10 +166,10 @@ try {
     # Loop through each test result and create a test setting
     foreach ($testResult in $testResults.Tests) {
 
-        # Skip if test already has both severity AND permissions
+        # Skip if test already has both severity AND permissions (unless -Force is used)
         $existingSetting = $maesterConfig.TestSettings | Where-Object { $_.Id -eq $testResult.Id }
         
-        if ($existingSetting -and $existingSetting.Severity -and $existingSetting.RequiredPermissions) {
+        if (-not $Force -and $existingSetting -and $existingSetting.Severity -and $existingSetting.RequiredPermissions) {
             # Write-Host "Test $($testResult.Id) already has metadata. Skipping." -ForegroundColor Yellow
             continue
         }

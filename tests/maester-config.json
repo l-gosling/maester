@@ -2111,24 +2111,11 @@
     },
     {
       "Id": "MT.1001",
-      "Severity": "Medium",
-      "Title": "At least one Conditional Access policy is configured with device compliance.",
-      "RequiredPermissions": {
-        "Graph": [
-          "Policy.Read.ConditionalAccess",
-          "Application.Read.All"
-        ]
-      }
+      "Title": "At least one Conditional Access policy is configured with device compliance."
     },
     {
       "Id": "MT.1002",
-      "Severity": "High",
-      "Title": "App management restrictions on applications and service principals is configured and enabled.",
-      "RequiredPermissions": {
-        "Graph": [
-          "Policy.Read.All"
-        ]
-      }
+      "Title": "App management restrictions on applications and service principals is configured and enabled."
     },
     {
       "Id": "MT.1003",
@@ -2968,13 +2955,7 @@
     },
     {
       "Id": "MT.1044",
-      "Severity": "High",
-      "Title": "Ensure modern authentication for Exchange Online is enabled",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
+      "Title": "Ensure modern authentication for Exchange Online is enabled"
     },
     {
       "Id": "MT.1045",
@@ -3333,13 +3314,7 @@
     },
     {
       "Id": "MT.1074",
-      "Severity": "Medium",
-      "Title": "Mailboxes should not send outbound mails using the .onmicrosoft.com domain.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
+      "Title": "Mailboxes should not send outbound mails using the .onmicrosoft.com domain."
     },
     {
       "Id": "MT.1075",
