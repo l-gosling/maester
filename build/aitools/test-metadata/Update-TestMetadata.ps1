@@ -10,7 +10,7 @@ function Get-PromptResult($prompt) {
         Write-Host "You can get a new key from https://ai.google.dev/gemini-api/docs/api-key"
         exit 1
     }
-    $uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey"
+    $uri = "https://generativelanguage.googleapis.com/v1/models/gemini-flash-latest:generateContent?key=$apiKey"
 
 
     $Body = @{
