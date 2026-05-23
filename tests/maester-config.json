@@ -6,6 +6,331 @@
   },
   "TestSettings": [
     {
+      "Id": "AZDO.1000",
+      "Severity": "High",
+      "Title": "Azure DevOps OAuth apps can access resources in your organization through OAuth",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1001",
+      "Severity": "High",
+      "Title": "Identities can connect to your organization's Git repos through SSH",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1002",
+      "Severity": "High",
+      "Title": "Log Audit Events",
+      "RequiredPermissions": {
+        "Graph": [
+          "AuditLog.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1003",
+      "Severity": "High",
+      "Title": "Restrict public projects",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1004",
+      "Severity": "High",
+      "Title": "Additional protections when using public registries",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1005",
+      "Severity": "High",
+      "Title": "IP Conditional Access policy validation",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1006",
+      "Severity": "High",
+      "Title": "External Users access",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1007",
+      "Severity": "High",
+      "Title": "Team and project administrator are allowed to invite new users",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1008",
+      "Severity": "Medium",
+      "Title": "Request access to Azure DevOps by e-mail notifications to administrators",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1009",
+      "Severity": "Info",
+      "Title": "Feedback Collection",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1010",
+      "Severity": "High",
+      "Title": "Audit streaming",
+      "RequiredPermissions": {
+        "Graph": [
+          "AuditLog.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1011",
+      "Severity": "Info",
+      "Title": "Project Resource Limits",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1012",
+      "Severity": "Info",
+      "Title": "Work Items Tags Limits",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1013",
+      "Severity": "High",
+      "Title": "Organization Owner should not be an individual",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1014",
+      "Severity": "Medium",
+      "Title": "Anonymous access to pipeline badges",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1015",
+      "Severity": "High",
+      "Title": "Limit variables that can be set at queue time",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1016",
+      "Severity": "High",
+      "Title": "Limit job authorization scope to current project for non-release pipelines",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1017",
+      "Severity": "High",
+      "Title": "Limit job authorization scope to current project for classic release pipelines",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1018",
+      "Severity": "High",
+      "Title": "Protect access to repositories in YAML pipelines",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1019",
+      "Severity": "Medium",
+      "Title": "Stage chooser",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1020",
+      "Severity": "Medium",
+      "Title": "Creation of classic build pipelines",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1021",
+      "Severity": "Medium",
+      "Title": "Creation of classic release pipelines",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1022",
+      "Severity": "High",
+      "Title": "Limit building pull requests from forked GitHub repositories",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1023",
+      "Severity": "High",
+      "Title": "Disable Marketplace tasks",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1024",
+      "Severity": "Medium",
+      "Title": "Disable Node 6 tasks",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1025",
+      "Severity": "High",
+      "Title": "Enable shell tasks arguments validation",
+      "RequiredPermissions": {
+        "Graph": [
+          "User.Read.All"
+        ]
+      }
+    },
+    {
+      "Id": "AZDO.1026",
+      "Severity": "Medium",
+      "Title": "Enable automatic enrollment to Advanced Security for Azure DevOps"
+    },
+    {
+      "Id": "AZDO.1027",
+      "Severity": "Medium",
+      "Title": "Disable showing Gravatar images for users outside of your enterprise"
+    },
+    {
+      "Id": "AZDO.1028",
+      "Severity": "Medium",
+      "Title": "Disable creation of TFVC repositories"
+    },
+    {
+      "Id": "AZDO.1029",
+      "Severity": "Medium",
+      "Title": "Storage Usage Limit"
+    },
+    {
+      "Id": "AZDO.1030",
+      "Severity": "Critical",
+      "Title": "Project Collection Administrators"
+    },
+    {
+      "Id": "AZDO.1031",
+      "Severity": "High",
+      "Title": "Validate SSH key expiration"
+    },
+    {
+      "Id": "AZDO.1032",
+      "Severity": "High",
+      "Title": "(Tenant) Restrict creation of global Personal Access Tokens"
+    },
+    {
+      "Id": "AZDO.1033",
+      "Severity": "Critical",
+      "Title": "(Tenant) Enable automatic revocation of leaked Personal Access Tokens"
+    },
+    {
+      "Id": "AZDO.1034",
+      "Severity": "High",
+      "Title": "(Tenant) Restrict creation of new Azure DevOps organizations"
+    },
+    {
+      "Id": "AZDO.1035",
+      "Severity": "High",
+      "Title": "(Tenant) Restrict Personal Access Token lifespan"
+    },
+    {
+      "Id": "AZDO.1036",
+      "Severity": "High",
+      "Title": "(Tenant) Restrict Personal Access Token full scope"
+    },
+    {
+      "Id": "AZDO.1037",
+      "Severity": "High",
+      "Title": "(Organization) Restrict Personal Access Token creation"
+    },
+    {
+      "Id": "AZDO.1038",
+      "Severity": "Medium",
+      "Title": "(Organization) Disallow extensions from accessing resources on the local network"
+    },
+    {
       "Id": "CIS.M365.1.1.1",
       "Severity": "High",
       "Title": "(L1) Ensure Administrative accounts are cloud-only",
@@ -104,6 +429,36 @@
       }
     },
     {
+      "Id": "CIS.M365.2.1.11",
+      "Severity": "Medium",
+      "Title": "(L2) Ensure comprehensive attachment filtering is applied",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CIS.M365.2.1.12",
+      "Severity": "Medium",
+      "Title": "(L1) Ensure the connection filter IP allow list is not used (Only Checks Default Policy)",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CIS.M365.2.1.13",
+      "Severity": "Medium",
+      "Title": "(L1) Ensure the connection filter safe list is off (Only Checks Default Policy)",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
       "Id": "CIS.M365.2.1.2",
       "Severity": "High",
       "Title": "(L1) Ensure the Common Attachment Types Filter is enabled (Only Checks Default Policy)",
@@ -167,36 +522,6 @@
       "Id": "CIS.M365.2.1.9",
       "Severity": "High",
       "Title": "(L1) Ensure that DKIM is enabled for all Exchange Online Domains",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CIS.M365.2.1.11",
-      "Severity": "Medium",
-      "Title": "(L2) Ensure comprehensive attachment filtering is applied",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CIS.M365.2.1.12",
-      "Severity": "Medium",
-      "Title": "(L1) Ensure the connection filter IP allow list is not used (Only Checks Default Policy)",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CIS.M365.2.1.13",
-      "Severity": "Medium",
-      "Title": "(L1) Ensure the connection filter safe list is off (Only Checks Default Policy)",
       "RequiredPermissions": {
         "ExchangeOnline": [
           "View-Only Configuration"
@@ -694,199 +1019,79 @@
       }
     },
     {
+      "Id": "CISA.MS.EXO.03.1",
+      "Title": "DKIM SHOULD be enabled for all domains.",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.06.1",
+      "Title": "Contact folders SHALL NOT be shared with all domains.",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.06.2",
+      "Title": "Calendar details SHALL NOT be shared with all domains.",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.07.1",
+      "Title": "External sender warnings SHALL be implemented.",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.08.1",
+      "Title": "A DLP solution SHALL be used.",
+      "Severity": "High",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.09.3",
+      "Title": "Disallowed file types SHALL be determined and enforced.",
+      "Severity": "High",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.09.5",
+      "Title": "At a minimum, click-to-run files SHOULD be blocked (e.g., .exe, .cmd, and .vbe).",
+      "Severity": "High",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
       "Id": "CISA.MS.EXO.1.1",
       "Severity": "High",
       "Title": "Automatic forwarding to external domains SHALL be disabled.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.2.1",
-      "Severity": "Medium",
-      "Title": "A list of approved IP addresses for sending mail SHALL be maintained.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.2.2",
-      "Severity": "Medium",
-      "Title": "An SPF policy SHALL be published for each domain, designating only these addresses as approved senders.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.3.1",
-      "Severity": "Medium",
-      "Title": "DKIM SHOULD be enabled for all domains.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.4.1",
-      "Severity": "Medium",
-      "Title": "A DMARC policy SHALL be published for every second-level domain.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.4.2",
-      "Severity": "High",
-      "Title": "The DMARC message rejection option SHALL be p=reject.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.4.3",
-      "Severity": "Medium",
-      "Title": "The DMARC point of contact for aggregate reports SHALL include reports@dmarc.cyber.dhs.gov.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.5.1",
-      "Severity": "High",
-      "Title": "SMTP AUTH SHALL be disabled.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.6.1",
-      "Severity": "Medium",
-      "Title": "Contact folders SHALL NOT be shared with all domains.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.6.2",
-      "Severity": "Medium",
-      "Title": "Calendar details SHALL NOT be shared with all domains.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.7.1",
-      "Severity": "Medium",
-      "Title": "External sender warnings SHALL be implemented.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.8.1",
-      "Severity": "High",
-      "Title": "A DLP solution SHALL be used.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.8.2",
-      "Severity": "Medium",
-      "Title": "The DLP solution SHALL protect personally identifiable information (PII) and sensitive information, as defined by the agency.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.8.3",
-      "Severity": "Medium",
-      "Title": "The selected DLP solution SHOULD offer services comparable to the native DLP solution offered by Microsoft.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.8.4",
-      "Severity": "High",
-      "Title": "At a minimum, the DLP solution SHALL restrict sharing credit card numbers, U.S. Individual Taxpayer Identification Numbers (ITIN), and U.S. Social Security numbers (SSN) via email.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.9.1",
-      "Severity": "Medium",
-      "Title": "Emails SHALL be filtered by attachment file types.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.9.2",
-      "Severity": "Medium",
-      "Title": "The attachment filter SHOULD attempt to determine the true file type and assess the file extension.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.9.3",
-      "Severity": "High",
-      "Title": "Disallowed file types SHALL be determined and enforced.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.9.4",
-      "Severity": "Medium",
-      "Title": "Alternatively chosen filtering solutions SHOULD offer services comparable to Microsoft Defender's Common Attachment Filter.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "CISA.MS.EXO.9.5",
-      "Severity": "High",
-      "Title": "At a minimum, click-to-run files SHOULD be blocked (e.g., .exe, .cmd, and .vbe).",
       "RequiredPermissions": {
         "ExchangeOnline": [
           "View-Only Configuration"
@@ -1104,6 +1309,196 @@
       }
     },
     {
+      "Id": "CISA.MS.EXO.2.1",
+      "Severity": "Medium",
+      "Title": "A list of approved IP addresses for sending mail SHALL be maintained.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.2.2",
+      "Severity": "Medium",
+      "Title": "An SPF policy SHALL be published for each domain, designating only these addresses as approved senders.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.3.1",
+      "Severity": "Medium",
+      "Title": "DKIM SHOULD be enabled for all domains.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.4.1",
+      "Severity": "Medium",
+      "Title": "A DMARC policy SHALL be published for every second-level domain.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.4.2",
+      "Severity": "High",
+      "Title": "The DMARC message rejection option SHALL be p=reject.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.4.3",
+      "Severity": "Medium",
+      "Title": "The DMARC point of contact for aggregate reports SHALL include reports@dmarc.cyber.dhs.gov.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.5.1",
+      "Severity": "High",
+      "Title": "SMTP AUTH SHALL be disabled.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.6.1",
+      "Severity": "Medium",
+      "Title": "Contact folders SHALL NOT be shared with all domains.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.6.2",
+      "Severity": "Medium",
+      "Title": "Calendar details SHALL NOT be shared with all domains.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.7.1",
+      "Severity": "Medium",
+      "Title": "External sender warnings SHALL be implemented.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.8.1",
+      "Severity": "High",
+      "Title": "A DLP solution SHALL be used.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.8.2",
+      "Severity": "Medium",
+      "Title": "The DLP solution SHALL protect personally identifiable information (PII) and sensitive information, as defined by the agency.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.8.3",
+      "Severity": "Medium",
+      "Title": "The selected DLP solution SHOULD offer services comparable to the native DLP solution offered by Microsoft.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.8.4",
+      "Severity": "High",
+      "Title": "At a minimum, the DLP solution SHALL restrict sharing credit card numbers, U.S. Individual Taxpayer Identification Numbers (ITIN), and U.S. Social Security numbers (SSN) via email.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.9.1",
+      "Severity": "Medium",
+      "Title": "Emails SHALL be filtered by attachment file types.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.9.2",
+      "Severity": "Medium",
+      "Title": "The attachment filter SHOULD attempt to determine the true file type and assess the file extension.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.9.3",
+      "Severity": "High",
+      "Title": "Disallowed file types SHALL be determined and enforced.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.9.4",
+      "Severity": "Medium",
+      "Title": "Alternatively chosen filtering solutions SHOULD offer services comparable to Microsoft Defender's Common Attachment Filter.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "CISA.MS.EXO.9.5",
+      "Severity": "High",
+      "Title": "At a minimum, click-to-run files SHOULD be blocked (e.g., .exe, .cmd, and .vbe).",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
       "Id": "CISA.MS.SHAREPOINT.1.1",
       "Severity": "Medium",
       "Title": "External sharing for SharePoint SHALL be limited to Existing guests or Only People in your organization.",
@@ -1128,6 +1523,17 @@
         ],
         "EntraRoles": [
           "Global Reader"
+        ]
+      }
+    },
+    {
+      "Id": "CTSO.001",
+      "Title": "Ensure no user has permanent access to all Azure subscriptions at the root scope",
+      "Severity": "High",
+      "RequiredPermissions": {
+        "Azure": [
+          "Owner",
+          "User Access Administrator"
         ]
       }
     },
@@ -2016,6 +2422,182 @@
       }
     },
     {
+      "Id": "MT.1024.1",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Protect your tenant with Insider Risk condition in Conditional Access policy"
+    },
+    {
+      "Id": "MT.1024.10",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Do not allow users to grant consent to unreliable applications"
+    },
+    {
+      "Id": "MT.1024.11",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Enable policy to block legacy authentication"
+    },
+    {
+      "Id": "MT.1024.12",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Require multifactor authentication for administrative roles"
+    },
+    {
+      "Id": "MT.1024.13",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Renew expiring service principal credentials"
+    },
+    {
+      "Id": "MT.1024.14",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Renew expiring application credentials"
+    },
+    {
+      "Id": "MT.1024.15",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Remove unused credentials from applications"
+    },
+    {
+      "Id": "MT.1024.16",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Remove unused applications"
+    },
+    {
+      "Id": "MT.1024.2",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Protect all users with a user risk policy"
+    },
+    {
+      "Id": "MT.1024.3",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Protect all users with a sign-in risk policy"
+    },
+    {
+      "Id": "MT.1024.4",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Enable self-service password reset"
+    },
+    {
+      "Id": "MT.1024.5",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Use least privileged administrative roles"
+    },
+    {
+      "Id": "MT.1024.6",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Designate more than one global admin"
+    },
+    {
+      "Id": "MT.1024.7",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Enable password hash sync if hybrid"
+    },
+    {
+      "Id": "MT.1024.8",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Do not expire passwords"
+    },
+    {
+      "Id": "MT.1024.9",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Entra Recommendation - Ensure all users can complete multifactor authentication"
+    },
+    {
       "Id": "MT.1025",
       "Severity": "High",
       "Title": "No external user with permanent role assignment on Control Plane.",
@@ -2131,6 +2713,17 @@
       }
     },
     {
+      "Id": "MT.1033",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "User should be blocked from using legacy authentication (<userPrincipalName>)"
+    },
+    {
       "Id": "MT.1033.0",
       "Severity": "High",
       "Title": "User should be blocked from using legacy authentication (<userPrincipalName>)",
@@ -2199,6 +2792,17 @@
           "Global Reader"
         ]
       }
+    },
+    {
+      "Id": "MT.1034",
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ]
+      },
+      "Title": "Emergency access users should not be blocked (<userPrincipalName>)"
     },
     {
       "Id": "MT.1034.0",
@@ -3596,6 +4200,56 @@
       }
     },
     {
+      "Id": "ORCA.1000",
+      "Severity": "High",
+      "Title": "Exchange Online Protection (EOP) is enabled.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "ORCA.1001",
+      "Severity": "High",
+      "Title": "Spam filter policy settings configured.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "ORCA.1002",
+      "Severity": "High",
+      "Title": "Malware filter policy settings configured.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "ORCA.1003",
+      "Severity": "High",
+      "Title": "Phishing filter policy settings configured.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
+      "Id": "ORCA.1004",
+      "Severity": "High",
+      "Title": "<URL> filtering policy settings configured.",
+      "RequiredPermissions": {
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ]
+      }
+    },
+    {
       "Id": "ORCA.101",
       "Severity": "Medium",
       "Title": "Bulk is marked as spam.",
@@ -4255,381 +4909,6 @@
           "View-Only Configuration"
         ]
       }
-    },
-    {
-      "Id": "ORCA.1000",
-      "Severity": "High",
-      "Title": "Exchange Online Protection (EOP) is enabled.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "ORCA.1001",
-      "Severity": "High",
-      "Title": "Spam filter policy settings configured.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "ORCA.1002",
-      "Severity": "High",
-      "Title": "Malware filter policy settings configured.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "ORCA.1003",
-      "Severity": "High",
-      "Title": "Phishing filter policy settings configured.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "ORCA.1004",
-      "Severity": "High",
-      "Title": "<URL> filtering policy settings configured.",
-      "RequiredPermissions": {
-        "ExchangeOnline": [
-          "View-Only Configuration"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1000",
-      "Severity": "High",
-      "Title": "Azure DevOps OAuth apps can access resources in your organization through OAuth",
-      "RequiredPermissions": {
-        "Graph": [
-          "Policy.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1001",
-      "Severity": "High",
-      "Title": "Identities can connect to your organization's Git repos through SSH",
-      "RequiredPermissions": {
-        "Graph": [
-          "Policy.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1002",
-      "Severity": "High",
-      "Title": "Log Audit Events",
-      "RequiredPermissions": {
-        "Graph": [
-          "AuditLog.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1003",
-      "Severity": "High",
-      "Title": "Restrict public projects",
-      "RequiredPermissions": {
-        "Graph": [
-          "Policy.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1004",
-      "Severity": "High",
-      "Title": "Additional protections when using public registries",
-      "RequiredPermissions": {
-        "Graph": [
-          "Policy.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1005",
-      "Severity": "High",
-      "Title": "IP Conditional Access policy validation",
-      "RequiredPermissions": {
-        "Graph": [
-          "Policy.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1006",
-      "Severity": "High",
-      "Title": "External Users access",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1007",
-      "Severity": "High",
-      "Title": "Team and project administrator are allowed to invite new users",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1008",
-      "Severity": "Medium",
-      "Title": "Request access to Azure DevOps by e-mail notifications to administrators",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1009",
-      "Severity": "Info",
-      "Title": "Feedback Collection",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1010",
-      "Severity": "High",
-      "Title": "Audit streaming",
-      "RequiredPermissions": {
-        "Graph": [
-          "AuditLog.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1011",
-      "Severity": "Info",
-      "Title": "Project Resource Limits",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1012",
-      "Severity": "Info",
-      "Title": "Work Items Tags Limits",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1013",
-      "Severity": "High",
-      "Title": "Organization Owner should not be an individual",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1014",
-      "Severity": "Medium",
-      "Title": "Anonymous access to pipeline badges",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1015",
-      "Severity": "High",
-      "Title": "Limit variables that can be set at queue time",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1016",
-      "Severity": "High",
-      "Title": "Limit job authorization scope to current project for non-release pipelines",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1017",
-      "Severity": "High",
-      "Title": "Limit job authorization scope to current project for classic release pipelines",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1018",
-      "Severity": "High",
-      "Title": "Protect access to repositories in YAML pipelines",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1019",
-      "Severity": "Medium",
-      "Title": "Stage chooser",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1020",
-      "Severity": "Medium",
-      "Title": "Creation of classic build pipelines",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1021",
-      "Severity": "Medium",
-      "Title": "Creation of classic release pipelines",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1022",
-      "Severity": "High",
-      "Title": "Limit building pull requests from forked GitHub repositories",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1023",
-      "Severity": "High",
-      "Title": "Disable Marketplace tasks",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1024",
-      "Severity": "Medium",
-      "Title": "Disable Node 6 tasks",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1025",
-      "Severity": "High",
-      "Title": "Enable shell tasks arguments validation",
-      "RequiredPermissions": {
-        "Graph": [
-          "User.Read.All"
-        ]
-      }
-    },
-    {
-      "Id": "AZDO.1026",
-      "Severity": "Medium",
-      "Title": "Enable automatic enrollment to Advanced Security for Azure DevOps"
-    },
-    {
-      "Id": "AZDO.1027",
-      "Severity": "Medium",
-      "Title": "Disable showing Gravatar images for users outside of your enterprise"
-    },
-    {
-      "Id": "AZDO.1028",
-      "Severity": "Medium",
-      "Title": "Disable creation of TFVC repositories"
-    },
-    {
-      "Id": "AZDO.1029",
-      "Severity": "Medium",
-      "Title": "Storage Usage Limit"
-    },
-    {
-      "Id": "AZDO.1030",
-      "Severity": "Critical",
-      "Title": "Project Collection Administrators"
-    },
-    {
-      "Id": "AZDO.1031",
-      "Severity": "High",
-      "Title": "Validate SSH key expiration"
-    },
-    {
-      "Id": "AZDO.1032",
-      "Severity": "High",
-      "Title": "(Tenant) Restrict creation of global Personal Access Tokens"
-    },
-    {
-      "Id": "AZDO.1033",
-      "Severity": "Critical",
-      "Title": "(Tenant) Enable automatic revocation of leaked Personal Access Tokens"
-    },
-    {
-      "Id": "AZDO.1034",
-      "Severity": "High",
-      "Title": "(Tenant) Restrict creation of new Azure DevOps organizations"
-    },
-    {
-      "Id": "AZDO.1035",
-      "Severity": "High",
-      "Title": "(Tenant) Restrict Personal Access Token lifespan"
-    },
-    {
-      "Id": "AZDO.1036",
-      "Severity": "High",
-      "Title": "(Tenant) Restrict Personal Access Token full scope"
-    },
-    {
-      "Id": "AZDO.1037",
-      "Severity": "High",
-      "Title": "(Organization) Restrict Personal Access Token creation"
-    },
-    {
-      "Id": "AZDO.1038",
-      "Severity": "Medium",
-      "Title": "(Organization) Disallow extensions from accessing resources on the local network"
     }
   ]
 }

@@ -11,7 +11,7 @@ function Get-PromptResult($prompt) {
         exit 1
     }
     
-    # Reverting to the original project model and version
+    # Using the project's original model and version
     $uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey"
 
 
@@ -42,28 +42,33 @@ function Get-PromptResult($prompt) {
             return $Response.candidates.content.parts.text
         } catch {
             $errorCode = 0
+            $errorBody = ""
+            
+            # Extract error details safely across PowerShell versions
             if ($null -ne $_.Exception.Response) {
                 $errorCode = [int]$_.Exception.Response.StatusCode
                 
-                # Robust error body extraction
                 try {
-                    $responseStream = $_.Exception.Response.GetResponseStream()
-                    if ($null -ne $responseStream) {
-                        $streamReader = [System.IO.StreamReader]::new($responseStream)
-                        $errorBody = $streamReader.ReadToEnd()
-                        Write-Host "`n*****************************************" -ForegroundColor Red
-                        Write-Host "CRITICAL API ERROR ENCOUNTERED" -ForegroundColor Red
-                        Write-Host "Status Code: $errorCode"
-                        Write-Host "Error Body: $errorBody"
-                        Write-Host "*****************************************\n" -ForegroundColor Red
-                    } else {
-                        Write-Host "API Error: Status Code $errorCode (No body returned)" -ForegroundColor Red
+                    if ($_.Exception.Response.PSObject.Properties['Content']) {
+                        # PowerShell Core (HttpResponseMessage)
+                        $errorBody = $_.Exception.Response.Content.ReadAsStringAsync().Result
+                    } elseif ($_.Exception.Response.PSObject.Methods['GetResponseStream']) {
+                        # Windows PowerShell (WebResponse)
+                        $stream = $_.Exception.Response.GetResponseStream()
+                        $reader = [System.IO.StreamReader]::new($stream)
+                        $errorBody = $reader.ReadToEnd()
                     }
                 } catch {
-                    Write-Host "API Error: Status Code $errorCode (Error reading body: $($_.Exception.Message))" -ForegroundColor Red
+                    $errorBody = "Failed to extract error body: $($_.Exception.Message)"
                 }
-            } else {
-                 Write-Host "CRITICAL API ERROR: $($_.Exception.Message)" -ForegroundColor Red
+            }
+
+            if ($errorCode -gt 0) {
+                Write-Host "`n*****************************************" -ForegroundColor Red
+                Write-Host "API ERROR ENCOUNTERED" -ForegroundColor Red
+                Write-Host "Status Code: $errorCode"
+                if ($errorBody) { Write-Host "Error Body: $errorBody" }
+                Write-Host "*****************************************\n" -ForegroundColor Red
             }
 
             if ($errorCode -eq 429) {
