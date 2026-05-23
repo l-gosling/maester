@@ -29,19 +29,38 @@ function Get-PromptResult($prompt) {
         "Content-Type" = "application/json"
     }
 
-    $Response = Invoke-RestMethod -Uri $Uri -Method Post -Headers $Headers -Body $Body
+    # Retry logic for 429 errors
+    $maxRetries = 5
+    $retryCount = 0
+    $waitInterval = 10 # Seconds
 
-    return $Response.candidates.content.parts.text
+    while ($retryCount -lt $maxRetries) {
+        try {
+            $Response = Invoke-RestMethod -Uri $Uri -Method Post -Headers $Headers -Body $Body
+            return $Response.candidates.content.parts.text
+        } catch {
+            if ($_.Exception.Message -match "429") {
+                $retryCount++
+                $sleepTime = $waitInterval * $retryCount
+                Write-Host "Rate limit hit (429). Retrying in $sleepTime seconds... (Attempt $retryCount/$maxRetries)" -ForegroundColor Yellow
+                Start-Sleep -Seconds $sleepTime
+            } else {
+                throw $_
+            }
+        }
+    }
+    
+    throw "Max retries exceeded for AI API call."
 }
 
 function Get-MtMaesterConfig($ConfigFilePath) {
     if (-not (Test-Path $ConfigFilePath)) {
-        Write-Host "Maester config file not found. Creating a new one." -ForegroundColor Yellow
+        Write-Host "Maester config file not found at: $ConfigFilePath. Creating a new one." -ForegroundColor Yellow
         $maesterConfig = @{
             TestSettings = @()
         }
     } else {
-        Write-Host "Maester config file found. Loading existing settings." -ForegroundColor Green
+        Write-Host "Maester config file found at: $ConfigFilePath. Loading existing settings." -ForegroundColor Green
         $maesterConfig = Get-Content -Path $ConfigFilePath -Raw | ConvertFrom-Json
     }
     return $maesterConfig
@@ -62,8 +81,9 @@ function Get-TestFunctionCode($ScriptBlock) {
         $functionName = $Matches[0]
         Write-Host "Searching for code for: $functionName" -ForegroundColor Cyan
         
-        # Search in powershell/public and powershell/internal
-        $file = Get-ChildItem -Path "../../powershell" -Recurse -Filter "$functionName.ps1" | Select-Object -First 1
+        # Search in powershell/public and powershell/internal relative to Repo Root
+        # Note: script is in build/aitools/test-metadata/
+        $file = Get-ChildItem -Path "$PSScriptRoot/../../../powershell" -Recurse -Filter "$functionName.ps1" -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($file) {
             return Get-Content -Path $file.FullName -Raw
         }
@@ -87,17 +107,18 @@ try {
     $promptFilePath = "./prompt-severity.md"
     $promptTemplate = Get-Content -Path $promptFilePath -Raw | Out-String
 
-    $configPath = "../../tests/maester-config.json"
+    # Path to root tests folder
+    $configPath = "../../../tests/maester-config.json"
     $maesterConfig = Get-MtMaesterConfig $configPath
 
     # Loop through each test result and create a test setting
     foreach ($testResult in $testResults.Tests) {
 
-        # Skip if test already has both severity AND permissions (optional: force refresh logic)
+        # Skip if test already has both severity AND permissions
         $existingSetting = $maesterConfig.TestSettings | Where-Object { $_.Id -eq $testResult.Id }
         
         if ($existingSetting -and $existingSetting.Severity -and $existingSetting.RequiredPermissions) {
-            Write-Host "Test $($testResult.Id) already has metadata. Skipping." -ForegroundColor Yellow
+            # Write-Host "Test $($testResult.Id) already has metadata. Skipping." -ForegroundColor Yellow
             continue
         }
 
@@ -119,7 +140,7 @@ try {
         # Call the AI API with the prompt
         try {
             $aiResponse = Get-PromptResult -prompt $prompt
-            Write-Host "AI Response: $aiResponse" -ForegroundColor Blue
+            # Write-Host "AI Response: $aiResponse" -ForegroundColor Blue
             
             # AI response should be pure JSON now
             $metadata = $aiResponse | ConvertFrom-Json
@@ -140,12 +161,13 @@ try {
 
             # Save periodically
             Set-MtMaesterConfig -ConfigFilePath $configPath -MaesterConfig $maesterConfig
+            Write-Host "Updated metadata for $($testResult.Id)" -ForegroundColor Cyan
         } catch {
             Write-Warning "Failed to process $($testResult.Id): $($_.Exception.Message)"
         }
         
-        # Rate limiting friendly
-        Start-Sleep -Seconds 2
+        # Rate limiting friendly - increase for free tier (15 RPM -> 4s min, use 6s for safety)
+        Start-Sleep -Seconds 6
     }
 } finally {
     Set-Location $OriginalLocation
