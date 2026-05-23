@@ -15,9 +15,13 @@ function Get-PromptResult($prompt) {
         exit 1
     }
     
-    # Using the project's original model and version
-    $uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey"
+    # Using v1beta and the latest flash model alias as per docs
+    $uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
 
+    $Headers = @{
+        "Content-Type"   = "application/json"
+        "X-goog-api-key" = $apiKey
+    }
 
     $Body = @{
         contents = @(
@@ -31,60 +35,46 @@ function Get-PromptResult($prompt) {
         )
     } | ConvertTo-Json -Depth 5
 
-    $Headers = @{
-        "Content-Type" = "application/json"
-    }
-
     # Retry logic for 429 errors
     $maxRetries = 5
     $retryCount = 0
     $waitInterval = 10 # Seconds
 
     while ($retryCount -lt $maxRetries) {
-        try {
-            $Response = Invoke-RestMethod -Uri $Uri -Method Post -Headers $Headers -Body $Body
-            return $Response.candidates.content.parts.text
-        } catch {
-            $errorCode = 0
-            $errorBody = ""
-            
-            # Extract error details safely across PowerShell versions
-            if ($null -ne $_.Exception.Response) {
-                $errorCode = [int]$_.Exception.Response.StatusCode
-                
-                try {
-                    if ($_.Exception.Response.PSObject.Properties['Content']) {
-                        # PowerShell Core (HttpResponseMessage)
-                        $errorBody = $_.Exception.Response.Content.ReadAsStringAsync().Result
-                    } elseif ($_.Exception.Response.PSObject.Methods['GetResponseStream']) {
-                        # Windows PowerShell (WebResponse)
-                        $stream = $_.Exception.Response.GetResponseStream()
-                        $reader = [System.IO.StreamReader]::new($stream)
-                        $errorBody = $reader.ReadToEnd()
-                    }
-                } catch {
-                    $errorBody = "Failed to extract error body: $($_.Exception.Message)"
-                }
-            }
+        # Using Invoke-WebRequest -SkipHttpErrorCheck to prevent stream disposal issues
+        $Response = Invoke-WebRequest -Uri $Uri -Method Post -Body $Body -Headers $Headers -SkipHttpErrorCheck -ErrorAction SilentlyContinue
 
-            if ($errorCode -gt 0) {
-                Write-Host "`n*****************************************" -ForegroundColor Red
-                Write-Host "API ERROR ENCOUNTERED" -ForegroundColor Red
-                Write-Host "Status Code: $errorCode"
-                if ($errorBody) { Write-Host "Error Body: $errorBody" }
-                Write-Host "*****************************************\n" -ForegroundColor Red
-            }
+        if ($null -eq $Response) {
+            Write-Host "CRITICAL ERROR: No response received from API." -ForegroundColor Red
+            exit 1
+        }
 
-            if ($errorCode -eq 429) {
-                $retryCount++
-                $sleepTime = $waitInterval * $retryCount
-                Write-Host "Rate limit hit (429). Retrying in $sleepTime seconds... (Attempt $retryCount/$maxRetries)" -ForegroundColor Yellow
-                Start-Sleep -Seconds $sleepTime
-            } else {
-                # Stop immediately for 404, 403, 401, 400
-                Write-Host "Non-retryable error ($errorCode). Terminating workflow." -ForegroundColor Red
-                exit 1
-            }
+        $statusCode = [int]$Response.StatusCode
+        $content = $Response.Content
+
+        if ($statusCode -eq 200) {
+            $json = $content | ConvertFrom-Json
+            return $json.candidates.content.parts.text
+        }
+        
+        # Log error details
+        Write-Host "`n*****************************************" -ForegroundColor Red
+        Write-Host "API ERROR ENCOUNTERED" -ForegroundColor Red
+        Write-Host "Status Code: $statusCode"
+        if ($content) { Write-Host "Error Body: $content" }
+        Write-Host "*****************************************\n" -ForegroundColor Red
+
+        if ($statusCode -eq 429) {
+            $retryCount++
+            $sleepTime = $waitInterval * $retryCount
+            Write-Host "Rate limit hit (429). This often means your DAILY limit (1,500 requests) or MINUTE limit (15 requests) is exhausted." -ForegroundColor Yellow
+            Write-Host "Check your quota at: https://aistudio.google.com/app/plan" -ForegroundColor Cyan
+            Write-Host "Retrying in $sleepTime seconds... (Attempt $retryCount/$maxRetries)" -ForegroundColor Yellow
+            Start-Sleep -Seconds $sleepTime
+        } else {
+            # Stop immediately for 404, 403, 401, 400
+            Write-Host "Non-retryable error ($statusCode). Terminating workflow." -ForegroundColor Red
+            exit 1
         }
     }
     
