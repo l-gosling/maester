@@ -204,6 +204,9 @@
         [Parameter(HelpMessage = 'Do not show the logo when starting Maester.')]
         [switch] $NoLogo,
 
+        # Skip the permission check for all tests.
+        [switch] $SkipPermissionCheck,
+
         # The root directory for configuration drift tracking.
         [Parameter(HelpMessage = 'Specify drift root directory, see https://maester.dev/docs/tests/MT.1060')]
         [string] $DriftRoot
@@ -306,6 +309,10 @@
     # Reset the graph cache and urls to avoid stale data.
     Clear-ModuleVariable
 
+    if ($SkipPermissionCheck) {
+        $__MtSession.SkipPermissionCheck = $true
+    }
+
     if (-not $DisableTelemetry) {
         Write-Telemetry -EventName InvokeMaester
     }
@@ -326,6 +333,9 @@
 
     # Initialize MtSession after Graph connected.
     Initialize-MtSession
+
+    # Gathers available permissions for connected services.
+    Get-MtAuthorization | Out-Null
 
     if ($isWebUri) {
         # Check if TeamChannelWebhookUri is a valid URL.
