@@ -92,7 +92,6 @@ For quick custom checks (in the `tests/Custom/` directory), all logic and format
 The `.Tests.ps1` suffix is **mandatory** -- Pester uses it for automatic test discovery.
 
 ### Pester Structure
-
 Every test file follows this pattern:
 
 ```powershell
@@ -107,7 +106,23 @@ Describe "{Suite/Area}" -Tag "{SuiteTag}", "{ProductAreaTag}" {
 }
 ```
 
-**Key rules:**
+### 0. Permission Generation (Metadata)
+
+Maester uses a "Graceful Permission Handling" system. When creating a new test, you MUST determine the required API permissions and directory roles.
+
+1. **Analyze your code**: Identify all Graph endpoints (e.g., `/policies/conditionalAccessPolicies`), Exchange cmdlets (e.g., `Get-TransportRule`), and Azure requests.
+2. **Generate JSON**: Create a `RequiredPermissions` fragment for the test.
+   - **Graph**: Scopes like `Policy.Read.All`, `Directory.Read.All`.
+   - **EntraRoles**: Directory roles like `Global Reader`, `Security Reader`.
+   - **ExchangeOnline**: Management roles like `View-Only Configuration`.
+   - **Azure**: RBAC roles like `Reader`.
+3. **Add to Config**: Add this metadata to `tests/maester-config.json` under `TestSettings`.
+
+**The GitHub workflow acts only as a backup.** As the Test Expert, you are responsible for providing these permissions upfront.
+
+---
+
+## Helper Function (.ps1)
 
 - The `Describe` block title identifies the suite and area (e.g., `"Maester/Entra"`, `"CISA"`, `"CIS"`).
 - The `Describe` block `-Tag` carries the **test suite tag** (exactly one) and **product area tags** (1-3).
@@ -241,7 +256,15 @@ function Test-Mt{Name} {
         return $null
     }
 
-    # 2. License check (if applicable)
+    # 2. Permission check
+    # CRITICAL: Always include this outside the try/catch block.
+    # The GitHub workflow will automatically add the required permissions to maester-config.json.
+    if (-not (Test-MtHasPermission -TestId 'MT.XXXX')) {
+        Add-MtTestResultDetail -SkippedBecause LimitedPermissions
+        return $null
+    }
+
+    # 3. License check (if applicable)
     $EntraIDPlan = Get-MtLicenseInformation -Product EntraID
     if ($EntraIDPlan -eq "Free") {
         Add-MtTestResultDetail -SkippedBecause NotLicensedEntraIDP1

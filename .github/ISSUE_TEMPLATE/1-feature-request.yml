@@ -43,3 +43,11 @@ body:
       description: Add any other context or screenshots about the feature request here.
     validations:
       required: false
+
+  - type: textarea
+    id: permissions
+    attributes:
+      label: Required API Permissions (if known)
+      description: List the Microsoft Graph scopes (e.g., Policy.Read.All) or Directory Roles (e.g., Global Reader) required for this feature.
+    validations:
+      required: false

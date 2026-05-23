@@ -42,7 +42,7 @@ The `GlobalSettings` section contains organization-wide configuration that can b
 
 ### TestSettings
 
-The `TestSettings` section allows you to customize individual test behavior, such as overriding the default severity level. See [Severity Levels](./severity-levels) for more details.
+The `TestSettings` section allows you to customize individual test behavior, such as overriding the default severity level or skipping permission checks for a specific test. See [Severity Levels](./severity-levels) for more details.
 
 ## Creating Your Custom Configuration
 
@@ -89,6 +89,17 @@ The following global settings are available for customization:
 | Setting | Description | Documentation |
 |---------|-------------|---------------|
 | `EmergencyAccessAccounts` | Define your break glass accounts and groups | [Emergency Access Accounts](./emergency-access-accounts.md) |
+| `SkipPermissionCheck` | Globally bypass all API permission and role checks | |
+
+## Available Test Settings
+
+Each test in the `TestSettings` array supports the following properties:
+
+| Property | Description |
+|----------|-------------|
+| `Severity` | Overrides the default severity (Critical, High, Medium, Low, Info) |
+| `SkipPermissionCheck` | Bypasses the permission check for this specific test |
+| `RequiredPermissions` | Object defining the Graph scopes and roles required (Managed automatically) |
 
 ## How Settings Are Merged
 

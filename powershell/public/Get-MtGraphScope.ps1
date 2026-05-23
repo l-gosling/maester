@@ -40,7 +40,10 @@
         [switch] $SendTeamsMessage,
         # If specified, the cmdlet will include the scope for read write endpoints.
         [Parameter(Mandatory = $false)]
-        [switch] $Privileged
+        [switch] $Privileged,
+        # If specified, the cmdlet will include all scopes for all built-in Maester tests.
+        [Parameter(Mandatory = $false)]
+        [switch] $Full
     )
 
     # Any changes made to these permission scopes should be reflected in the documentation.
@@ -49,13 +52,18 @@
     # NOTE: We should only include read-only permissions in the default scopes.
     # Other permissions should be opted-in by the user with switches like -SendMail.
 
-    # Default read-only scopes required for Maester.
-    $scopes = @( #IMPORTANT: Read note above before adding any new scopes.
+    # Minimum read-only scopes required for Maester to initialize.
+    $scopes = @(
+        'User.Read'
+        'Directory.Read.All'
+    )
+
+    # Scopes required for all built-in Maester tests.
+    $fullScopes = @( #IMPORTANT: Read note above before adding any new scopes.
         'DeviceManagementConfiguration.Read.All'
         'DeviceManagementManagedDevices.Read.All'
         'DeviceManagementRBAC.Read.All'
         'DeviceManagementServiceConfig.Read.All'
-        'Directory.Read.All'
         'DirectoryRecommendations.Read.All'
         'IdentityRiskEvent.Read.All'
         'OnPremDirectorySynchronization.Read.All'
@@ -73,6 +81,12 @@
         'ThreatHunting.Read.All'
         'UserAuthenticationMethod.Read.All'
     )
+
+    if ($Full) {
+        $fullScopes | ForEach-Object {
+            if ($scopes -notcontains $_) { $scopes += $_ }
+        }
+    }
 
     # Any changes made to these permission scopes should be reflected in the documentation.
     # /maester/website/docs/sections/privilegedPermissions.md

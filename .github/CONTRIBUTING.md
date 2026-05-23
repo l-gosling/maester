@@ -18,6 +18,7 @@ When contributing scripts, tests, or module changes, follow these baseline pract
 - Use Pascal Case for object and variable names.
 - Use full function and cmdlet names instead of aliases.
 - Include comment-based help inside function blocks (not above them) with a synopsis, description, and examples.
+- Include a mandatory permission check using `Test-MtHasPermission` at the beginning of all test helper functions.
 
 ## Community Contribution Guidelines
 

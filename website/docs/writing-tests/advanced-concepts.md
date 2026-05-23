@@ -147,6 +147,61 @@ function Test-ContosoUsersMissingManagers {
 To use the markdown content from the file, **do not** include the `-Description` parameter when calling `Add-MtTestResultDetail`.
 :::
 
+##### Handling Permissions
+
+Maester includes a mechanism to gracefully skip tests if the connected session lacks the required API permissions or directory roles. This prevents tests from failing with unhelpful errors and provides a better user experience.
+
+###### How it works
+
+1.  **Permission Gathering**: When `Invoke-Maester` starts, it automatically gathers the available Graph scopes and directory roles for the connected services (Graph, Exchange, Azure, Teams).
+2.  **Test ID Mapping**: Every test ID in `maester-config.json` is mapped to its `RequiredPermissions`. This mapping is automatically generated and updated by an AI-assisted GitHub workflow whenever you add or modify a test.
+3.  **Graceful Skip**: Each test helper function should call `Test-MtHasPermission` at the beginning. If the required permissions are missing, the test reports a "LimitedPermissions" status and skips.
+
+###### Implementing permission checks
+
+To implement a permission check in your helper function, add the following block at the beginning, immediately after your connection checks and outside the main `try/catch` block.
+
+```powershell
+function Test-MtYourCustomCheck {
+    [CmdletBinding()]
+    param()
+
+    # 1. Connection check
+    if (!(Test-MtConnection Graph)) {
+        Add-MtTestResultDetail -SkippedBecause NotConnectedGraph
+        return $null
+    }
+
+    # 2. Permission check
+    # Replace 'MT.XXXX' with your actual Test ID.
+    if (-not (Test-MtHasPermission -TestId 'MT.XXXX')) {
+        Add-MtTestResultDetail -SkippedBecause LimitedPermissions
+        return $null
+    }
+
+    try {
+        # Your test logic here...
+    } catch {
+        Add-MtTestResultDetail -SkippedBecause Error -SkippedError $_
+        return $null
+    }
+}
+```
+
+###### Automatic Permission Discovery
+
+You do not need to manually edit `maester-config.json` to add permissions for your test. When you submit a Pull Request, a GitHub Action will analyze your PowerShell code using AI and automatically update the `RequiredPermissions` property for your Test ID in the configuration file.
+
+###### Bypassing Permission Checks
+
+If you are certain you have the necessary permissions but Maester is skipping the test, you can bypass the check using the `-SkipPermissionCheck` switch:
+
+```powershell
+Invoke-Maester -SkipPermissionCheck
+```
+
+You can also bypass checks globally or per-test by setting `"SkipPermissionCheck": true` in your custom `maester-config.json`.
+
 ##### Error handling
 
 Always include your main code within a try catch block. In the catch block, use `Add-MtTestResultDetail -SkippedBecause Error -SkippedError $_` to log the error and return `$null` to indicate that the test could not be run.
