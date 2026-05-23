@@ -84,6 +84,12 @@ function escapeTable(value) {
     .replaceAll("\n", "<br />");
 }
 
+function escapeMdx(value) {
+  return String(value ?? "")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
 function normalizeWhitespace(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }
@@ -338,7 +344,7 @@ function renderTestPage(test) {
   const keywords = unique(["Maester", "Microsoft 365 security", test.id, test.severity, suiteConfig[test.suite]?.label, test.category, ...test.tags]);
   const body = [];
   body.push(generatedMarker);
-  body.push("", `# ${test.id} - ${test.title}`, "");
+  body.push("", `# ${test.id} - ${escapeMdx(test.title)}`, "");
   body.push("## Overview", "", test.markdown || test.helpDescription || test.description, "");
   body.push("## Test Metadata", "");
   body.push("| Field | Value |", "| --- | --- |");
@@ -360,7 +366,7 @@ function renderTestPage(test) {
   body.push("");
 
   return `---
-title: ${yamlQuote(`${test.id} - ${test.title}`)}
+title: ${yamlQuote(`${test.id} - ${escapeMdx(test.title)}`)}
 description: ${yamlQuote(test.description)}
 slug: /tests/${test.id}
 className: generated-test-doc
@@ -375,7 +381,7 @@ ${body.join("\n")}`;
 
 function renderSuiteIndex(suite, tests) {
   const config = suiteConfig[suite];
-  const rows = tests.map((test) => `| [${test.id}](../${test.id}) | ${escapeTable(test.title)} | ${escapeTable(test.severity)} | ${escapeTable(test.category)} |`).join("\n");
+  const rows = tests.map((test) => `| [${test.id}](../${test.id}) | ${escapeTable(escapeMdx(test.title))} | ${escapeTable(test.severity)} | ${escapeTable(test.category)} |`).join("\n");
   return `---
 id: overview
 title: ${yamlQuote(config.title)}
@@ -407,7 +413,7 @@ function renderRootIndex(tests) {
     .join("\n");
   const testRows = tests
     .toSorted((a, b) => a.id.localeCompare(b.id))
-    .map((test) => `| [${test.id}](./${test.id}) | ${escapeTable(test.title)} | ${escapeTable(suiteConfig[test.suite]?.label ?? test.suite)} | ${escapeTable(test.severity)} | ${escapeTable(test.category)} |`)
+    .map((test) => `| [${test.id}](./${test.id}) | ${escapeTable(escapeMdx(test.title))} | ${escapeTable(suiteConfig[test.suite]?.label ?? test.suite)} | ${escapeTable(test.severity)} | ${escapeTable(test.category)} |`)
     .join("\n");
   return `---
 id: overview
