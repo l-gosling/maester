@@ -2112,12 +2112,31 @@
     {
       "Id": "MT.1001",
       "Title": "At least one Conditional Access policy is configured with device compliance.",
-      "Severity": "High"
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All",
+          "Policy.Read.ConditionalAccess"
+        ],
+        "EntraRoles": [
+          "Global Reader",
+          "Security Reader"
+        ]
+      }
     },
     {
       "Id": "MT.1002",
       "Title": "App management restrictions on applications and service principals is configured and enabled.",
-      "Severity": "High"
+      "Severity": "Medium",
+      "RequiredPermissions": {
+        "Graph": [
+          "Policy.Read.All"
+        ],
+        "EntraRoles": [
+          "Global Reader",
+          "Security Reader"
+        ]
+      }
     },
     {
       "Id": "MT.1003",
@@ -2958,7 +2977,17 @@
     {
       "Id": "MT.1044",
       "Title": "Ensure modern authentication for Exchange Online is enabled",
-      "Severity": "High"
+      "Severity": "High",
+      "RequiredPermissions": {
+        "Graph": [],
+        "EntraRoles": [
+          "Global Reader"
+        ],
+        "ExchangeOnline": [
+          "View-Only Configuration"
+        ],
+        "Azure": []
+      }
     },
     {
       "Id": "MT.1045",
