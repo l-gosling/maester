@@ -9,6 +9,7 @@ function Get-MtAuthorization {
     and used by tests to gracefully skip if required permissions are missing.
     #>
     [CmdletBinding()]
+    [OutputType([hashtable])]
     param()
 
     if ($null -ne $__MtSession.Authorization) {
